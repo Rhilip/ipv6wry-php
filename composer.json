@@ -1,0 +1,22 @@
+{
+  "name": "rhilip/ipv6wry",
+  "description": "The Parser Library of ipv6wry.db in PHP",
+  "type": "library",
+  "version": "0.1.0",
+  "require": {
+    "php": "^7.0",
+    "ext-bcmath": "*"
+  },
+  "license": "GPL-3.0-only",
+  "autoload": {
+    "classmap": [
+      "src/IpLocation.php"
+    ]
+  },
+  "authors": [
+    {
+      "name": "Rhilip",
+      "email": "rhilipruan@gmail.com"
+    }
+  ]
+}
