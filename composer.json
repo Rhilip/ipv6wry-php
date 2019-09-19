@@ -2,11 +2,16 @@
   "name": "rhilip/ipv6wry",
   "description": "The Parser Library of ipv6wry.db in PHP",
   "type": "library",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "require": {
     "php": "^7.0",
     "ext-bcmath": "*"
   },
+  "keywords": [
+    "geoip",
+    "ipv6wry",
+    "china"
+  ],
   "license": "GPL-3.0-only",
   "autoload": {
     "classmap": [
@@ -16,7 +21,9 @@
   "authors": [
     {
       "name": "Rhilip",
-      "email": "rhilipruan@gmail.com"
+      "email": "rhilipruan@gmail.com",
+      "role": "Developer",
+      "homepage": "https://blog.rhilip.info/"
     }
   ]
 }

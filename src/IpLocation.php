@@ -61,7 +61,7 @@ class IpLocation
     private $dLen;
 
     /**
-     * IpLocation constructor.
+     * Errors
      */
     const ERROR_DATABASE_READABLE = 'Failed open ip database file!';
     const ERROR_DATABASE_TYPE = 'The type of ip database file is not "IPDB".';
@@ -70,6 +70,9 @@ class IpLocation
     const ERROR_UNKNOWN_ADDRESS = 'Unknown Address.';
     const ERROR_SEARCH_INDEX_OUT_RANGE = 'Index out of range';
 
+    /**
+     * IpLocation constructor.
+     */
     private final function __construct()
     {
         // 打开 ipv6wry.db 文件句柄
@@ -102,8 +105,8 @@ class IpLocation
         if (self::$instance !== null)
             throw new RuntimeException(self::ERROR_DATABASE_RESET_PATH);
 
-        // 使用内置的数据库，如果用户没有指定外部数据库的话
-        self::$db_path = self::$db_path ?? $db_path ?? __DIR__ . '/ipv6wry.db';
+        // 如果用户没有指定外部数据库的话，使用内置的数据库
+        self::$db_path = $db_path ?? self::$db_path ?? __DIR__ . '/ipv6wry.db';
 
         // 检查文件是否存在以及文件权限
         if (!is_readable(self::$db_path)) {
@@ -149,7 +152,7 @@ class IpLocation
     private function readInt(int $offset = 0, int $size = 8): int
     {
         $s = $this->read($offset, $size);
-        $format = [8 => 'P', 4 => 'V', 3 => 'v', 2 => 's', 1 => 'C'][$size];
+        $format = [8 => 'P', 4 => 'V', 3 => 'v', 1 => 'C'][$size];
 
         return unpack($format, $s)[1];
     }
