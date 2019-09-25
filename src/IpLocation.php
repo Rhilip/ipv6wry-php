@@ -152,8 +152,12 @@ class IpLocation
     private function readInt(int $offset = 0, int $size = 8): int
     {
         $s = $this->read($offset, $size);
-        $format = [8 => 'P', 4 => 'V', 3 => 'v', 1 => 'C'][$size];
+        if ($size == 3) {
+            $s .= "\x00";
+            $size = 4;
+        }
 
+        $format = [8 => 'P', 4 => 'V', 1 => 'C'][$size];
         return unpack($format, $s)[1];
     }
 
