@@ -157,7 +157,7 @@ class IpLocation
             $size = 4;
         }
 
-        $format = [8 => 'P', 4 => 'V', 1 => 'C'][$size];
+        $format = [8 => 'P', 4 => 'V', 2 => 'v', 1 => 'C'][$size];
         return unpack($format, $s)[1];
     }
 
@@ -259,7 +259,7 @@ class IpLocation
     {
         $hi = $hi ?? $this->size - 1;
 
-        while ($lo < $hi) {
+        while ($lo <= $hi) {
             if ($hi - $lo <= 1) {
                 if ($this->getData($lo) > $key) {
                     return -1;

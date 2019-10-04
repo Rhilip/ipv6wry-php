@@ -6,7 +6,7 @@ The Parser Library of ipv6wry.db in PHP
 
 | Library Version | IP Database Version |
 | :--: | :--: | 
-| v0.1.0-v0.1.1 | 20190812 |
+| v0.1.0-v0.1.3 | 20190812 |
 
 ## Install and Usage
 
@@ -58,6 +58,8 @@ This Library doesn't provide Database Update methods, But you can download Datab
 ## Changelog
 
 ```
+v0.1.3 Fix binarySearch() may too early to return
+v0.1.2 Fix unpack error for 3 bytes string to int
 v0.1.1 Fix IpLocation::setDbPath can't change self::$db_path when call twice before instance.
 v0.1.0 Init Commit.
 ```
