@@ -2,7 +2,7 @@
   "name": "rhilip/ipv6wry",
   "description": "The Parser Library of ipv6wry.db in PHP",
   "type": "library",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "require": {
     "php": "^7.0",
     "ext-bcmath": "*"

@@ -7,6 +7,7 @@ The Parser Library of ipv6wry.db in PHP
 | Library Version | IP Database Version |
 | :--: | :--: | 
 | v0.1.0-v0.1.3 | 20190812 |
+| v0.1.4 | 20200506 |
 
 ## Install and Usage
 
