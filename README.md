@@ -5,9 +5,9 @@ The Parser Library of ipv6wry.db in PHP
 ## Built-in Database Update At
 
 | Library Version | IP Database Version |
-| :--: | :--: | 
+| :--: | :--: |
 | v0.1.0-v0.1.3 | 20190812 |
-| v0.1.4 | 20200506 |
+| v0.1.4-v0.1.5 | 20200506 |
 
 ## Install and Usage
 
@@ -55,7 +55,7 @@ This Library doesn't provide Database Update methods, But you can download Datab
 
  - Official Website : <http://ip.zxinc.org/index.htm>
  - Auto-Sync Repo : <https://github.com/Rhilip/ipv6wry.db>
- 
+
 ## Changelog
 
 ```
@@ -69,7 +69,7 @@ v0.1.0 Init Commit.
 
  - This Repo: [GPL-3.0-only](https://github.com/Rhilip/ipv6wry.db/blob/master/LICENSE)
  - IP Database for `ipv6wry.db`:
- 
+
 ```
 本协议是用户（您）和ZX公司（zxinc.org）之间关于使用ZX IP地址数据库（本数据库）达成的协议。您安装或者使用本数据库的行为将视为对本协的接受及同意。除非您接受本协议，否则请勿下载、安装或使用本数据库，并请将本数据库从计算机中移除。
 
