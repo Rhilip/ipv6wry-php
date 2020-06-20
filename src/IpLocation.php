@@ -73,7 +73,7 @@ class IpLocation
     /**
      * IpLocation constructor.
      */
-    private final function __construct()
+    final private function __construct()
     {
         // 打开 ipv6wry.db 文件句柄
         $filename = self::setDbPath();
@@ -102,14 +102,15 @@ class IpLocation
     public static function setDbPath(string $db_path = null)
     {
         // 检查是否已经实例化
-        if (self::$instance !== null)
+        if (self::$instance !== null) {
             throw new RuntimeException(self::ERROR_DATABASE_RESET_PATH);
+        }
 
         // 如果用户没有指定外部数据库的话，使用内置的数据库
         self::$db_path = $db_path ?? self::$db_path ?? __DIR__ . '/ipv6wry.db';
 
         // 检查文件是否存在以及文件权限
-        if (!is_readable(self::$db_path)) {
+        if (!file_exists(self::$db_path) or !is_readable(self::$db_path)) {
             throw new RuntimeException(self::ERROR_DATABASE_READABLE);
         }
 
@@ -188,28 +189,21 @@ class IpLocation
      */
     private function parseIpv6(string $ip): int
     {
-        // 检查是不是ipv6
-        $ipv6 = filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6);
-        if ($ipv6 === false) return -1;
-
-        // 补全 ::
-        $count = substr_count($ipv6, ':');
-        $ipv6 = preg_replace('/::/', str_repeat(':', 8 - $count + 1), $ipv6, 1);
-
-        // 我们只要前4个，并将其将其转换为整数
-        $v6_prefix_long = 0;
-        $subs = array_slice(explode(':', $ipv6), 0, 4);
-        foreach ($subs as $sub) {
-            if (strlen($sub) > 4) return -1;
-            $v6_prefix_long = bcadd(bcmul($v6_prefix_long, 0x10000), intval($sub, 16));
+        $ip_bin = inet_pton($ip);
+        if ($ip_bin === false) {
+            return -1;
+        } elseif (strlen($ip_bin) != 16) {
+            return -1;
         }
-        return (int)$v6_prefix_long;
+        
+        return unpack("J", $ip_bin)[1];
     }
 
     private function checkIndex(int $index)
     {
-        if ($index < 0 || $index >= $this->size)
+        if ($index < 0 || $index >= $this->size) {
             throw new RuntimeException(self::ERROR_SEARCH_INDEX_OUT_RANGE);
+        }
     }
 
     private function getData(int $index): int
@@ -224,14 +218,15 @@ class IpLocation
      * @param bool $isTwoPart
      * @return string
      */
-    private function readLoc(int $start, bool $isTwoPart = False): string
+    private function readLoc(int $start, bool $isTwoPart = false): string
     {
         $jType = $this->readInt($start, 1);
         if ($jType == 1 || $jType == 2) {
             $start += 1;
             $offAddr = $this->readInt($start, $this->osLen);
-            if ($offAddr == 0)
+            if ($offAddr == 0) {
                 throw new RuntimeException(self::ERROR_UNKNOWN_ADDRESS);
+            }
 
             $loc = $this->readLoc($offAddr, $jType == 1);
             $nAddr = $start + $this->osLen;
@@ -242,7 +237,9 @@ class IpLocation
 
         if ($isTwoPart && $jType != 1) {
             $part2 = $this->readLoc($nAddr);
-            if ($loc && $part2) $loc .= ' ' . $part2;
+            if ($loc && $part2) {
+                $loc .= ' ' . $part2;
+            }
         }
         return $loc;
     }
@@ -298,15 +295,19 @@ class IpLocation
             $instance = self::getInstance();
             $v6_int = $instance->parseIpv6($ipv6);
 
-            if ($v6_int < 0)
+            if ($v6_int < 0) {
                 throw new RuntimeException(self::ERROR_NOT_IPV6_FORMAT);
+            }
 
             $index = $instance->binarySearch($v6_int);
 
-            if ($index < 0)
+            if ($index < 0) {
                 throw new RuntimeException(self::ERROR_UNKNOWN_ADDRESS);
+            }
 
-            if ($index > $instance->size - 2) $index = $instance->size - 2;
+            if ($index > $instance->size - 2) {
+                $index = $instance->size - 2;
+            }
 
             $area = $instance->getLoc($index);
 
